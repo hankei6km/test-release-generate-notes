@@ -17,7 +17,7 @@ jobs:
           OWNER="$(cut -d '/' -f 1 <<< ${REPOSITORY})";
           NAME="$(cut -d '/' -f 2 <<< ${REPOSITORY})";
           gh api "/repos/${OWNER}/${NAME}/releases/generate-notes" -f "tag_name=${TAGNAME}" -f "previous_tag_name=${PREV_TAGNAME}" -f "configuration_file_path=${CONFIG_FILE}" --jq .body
-          | sed -e 's/^### //'
+          | sed -e 's/^### /::set-output name=label::/'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
