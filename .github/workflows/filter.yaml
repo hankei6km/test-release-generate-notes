@@ -21,7 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-          TAGNAME: v0.5.0
+          TAGNAME: v0.6.0
           PREV_TAGNAME: v0.1.0
           CONFIG_FILE: rel-filter/filter-bug.yml
 
