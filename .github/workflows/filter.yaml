@@ -27,4 +27,4 @@ jobs:
       - name: Print
         run: echo "${OUT}"
         env:
-          OUT: ${{ step.filter.label }}
+          OUT: ${{ steps.filter.label }}
