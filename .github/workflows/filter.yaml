@@ -40,9 +40,9 @@ jobs:
           CONFIG_FILE: rel-filter/filter-bug.yml
 
       - name: Check refactoring
-        if: ${{ contains(steps.filter-bug.outputs.label, "refactoring"} }}
+        if: ${{ contains(steps.filter-refactoring.outputs.label, 'refactoring'} }}
         run: echo "refactoring"
 
       - name: Check bug
-        if: ${{ contains(steps.filter-bug.outputs.label, "bug"} }}
+        if: ${{ contains(steps.filter-bug.outputs.label, 'bug'} }}
         run: echo "bug"
