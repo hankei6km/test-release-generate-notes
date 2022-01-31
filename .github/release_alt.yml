@@ -1,0 +1,11 @@
+changelog:
+  categories:
+    - title: 機能追加
+      labels:
+        - enhancement
+    - title: バグ修正
+      labels:
+        - bug
+    - title: その他の変更
+      labels:
+        - '*'
