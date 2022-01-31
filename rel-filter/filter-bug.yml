@@ -1,5 +1,5 @@
 changelog:
   categories:
-    - title: Bug Fixes
+    - title: "::set-output name=label::bug"
       labels:
         - bug
