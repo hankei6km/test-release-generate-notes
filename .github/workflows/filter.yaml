@@ -5,7 +5,7 @@ on:
       - "**"
 
 jobs:
-  filter-by-note
+  filter-by-note:
     runs-on: ubuntu-latest
 
     steps:
