@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Filter
-        id: filter
+      - name: Filter refactoring
+        id: filter-refactoring
         run: >-
           OWNER="$(cut -d '/' -f 1 <<< ${REPOSITORY})";
           NAME="$(cut -d '/' -f 2 <<< ${REPOSITORY})";
@@ -21,11 +21,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-          TAGNAME: v0.6.0
+          TAGNAME: v0.7.0
+          PREV_TAGNAME: v0.1.0
+          CONFIG_FILE: rel-filter/filter-refactoring.yml
+
+      - name: Filter bug
+        id: filter-bug
+        run: >-
+          OWNER="$(cut -d '/' -f 1 <<< ${REPOSITORY})";
+          NAME="$(cut -d '/' -f 2 <<< ${REPOSITORY})";
+          gh api "/repos/${OWNER}/${NAME}/releases/generate-notes" -f "tag_name=${TAGNAME}" -f "previous_tag_name=${PREV_TAGNAME}" -f "configuration_file_path=${CONFIG_FILE}" --jq .body
+          | sed -e 's/^### /::set-output name=label::/'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          TAGNAME: v0.7.0
           PREV_TAGNAME: v0.1.0
           CONFIG_FILE: rel-filter/filter-bug.yml
 
-      - name: Print
-        run: echo "${OUT}"
-        env:
-          OUT: ${{ steps.filter.outputs.label }}
+      - name: Check refactoring
+        if: ${{ contains(steps.filter-bug.outputs.label, "refactoring"} }}
+        run: echo "refactoring"
+
+      - name: Check bug
+        if: ${{ contains(steps.filter-bug.outputs.label, "bug"} }}
+        run: echo "bug"
